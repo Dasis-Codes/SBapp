@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 4 (correct version for this project) -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Your custom CSS file -->
+    <link id="light-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
+    <link id="dark-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dark.css') }}" disabled>
+
+    {% if title %}
+        <title>APP - {{ title }}</title>
+    {% else %}
+        <title>APP</title>
+    {% endif %}
+
+    <!-- Custom CSS for theme switcher -->
+    <style>
+      .theme-dropdown-wrapper {
+        position: relative;
+      }
+
+      .theme-toggle-btn {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 20px;
+        color: white;
+        padding: 6px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle-btn:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.5);
+      }
+
+      .theme-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        padding: 10px 0;
+        min-width: 180px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        margin-top: 10px;
+      }
+
+      .theme-dropdown-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .theme-option {
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        color: #333;
+      }
+
+      .theme-option:hover {
+        background: #f8f9fa;
+      }
+
+      .theme-option.active {
+        background: #007bff;
+        color: white;
+      }
+
+      .theme-option.active:hover {
+        background: #0069d9;
+      }
+
+      .theme-icon {
+        font-size: 16px;
+        width: 24px;
+        text-align: center;
+      }
+
+      .theme-name {
+        font-weight: 500;
+      }
+
+      .dark-mode .theme-dropdown-menu {
+        background: #343a40;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      }
+
+      .dark-mode .theme-option {
+        color: #e9ecef;
+      }
+
+      .dark-mode .theme-option:hover {
+        background: #495057;
+      }
+
+      .dark-mode .theme-option.active {
+        background: #007bff;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="/">SBAPP</a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarToggle" aria-controls="navbarToggle"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
+              <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+            </div>
+
+            <div class="navbar-nav">
+              {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">Add Post</a>
+                <a class="nav-item nav-link" href="{{ url_for('user.account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('user.logout') }}">Log Out</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{{ url_for('user.login') }}">Login</a>
+                <a class="nav-item nav-link" href="{{ url_for('user.register') }}">Register</a>
+              {% endif %}
+            </div>
+            
+            <!-- Premium Theme Switcher -->
+            <div class="theme-dropdown-wrapper mx-3">
+              <button class="theme-toggle-btn" id="theme-toggle-btn">
+                <i class="fas fa-palette"></i>
+                <span>Theme</span>
+                <i class="fas fa-chevron-down ml-1" style="font-size: 12px;"></i>
+              </button>
+              
+              <div class="theme-dropdown-menu" id="theme-dropdown">
+                <button class="theme-option" data-theme="light">
+                  <div class="theme-icon">
+                    <i class="fas fa-sun"></i>
+                  </div>
+                  <div class="theme-name">Light Theme</div>
+                  <div class="theme-check ml-auto">
+                    <i class="fas fa-check"></i>
+                  </div>
+                </button>
+                <button class="theme-option" data-theme="dark">
+                  <div class="theme-icon">
+                    <i class="fas fa-moon"></i>
+                  </div>
+                  <div class="theme-name">Dark Theme</div>
+                  <div class="theme-check ml-auto">
+                    <i class="fas fa-check"></i>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main container (push down from fixed navbar) -->
+    <main role="main" class="container-fluid" style="margin-top: 90px;">
+      <div class="row">
+        <div class="col-md-8">
+          <!-- Flash messages -->
+          {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          {% block content %}{% endblock %}
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3>Properties</h3>
+            <p class="text-muted">These are the things you can do.</p>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-light">Add Posts</li>
+              <li class="list-group-item list-group-item-light">Update Posts</li>
+              <li class="list-group-item list-group-item-light">Delete Posts</li>
+              <li class="list-group-item list-group-item-light">See other's Posts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap 4 JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const themeDropdown = document.getElementById('theme-dropdown');
+      const themeOptions = document.querySelectorAll('.theme-option');
+      const lightTheme = document.getElementById('light-theme');
+      const darkTheme = document.getElementById('dark-theme');
+      const body = document.body;
+
+      // Toggle dropdown
+      themeToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        themeDropdown.classList.toggle('show');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!themeToggleBtn.contains(e.target) && !themeDropdown.contains(e.target)) {
+          themeDropdown.classList.remove('show');
+        }
+      });
+
+      // Load saved theme on page load
+      function loadTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+        updateActiveOption(savedTheme);
+      }
+
+      // Set theme function
+      function setTheme(theme) {
+        if (theme === 'dark') {
+          lightTheme.disabled = true;
+          darkTheme.disabled = false;
+          body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          lightTheme.disabled = false;
+          darkTheme.disabled = true;
+          body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+        }
+      }
+
+      // Update active option in dropdown
+      function updateActiveOption(theme) {
+        themeOptions.forEach(option => {
+          const checkIcon = option.querySelector('.theme-check i');
+          if (option.dataset.theme === theme) {
+            option.classList.add('active');
+            checkIcon.style.visibility = 'visible';
+          } else {
+            option.classList.remove('active');
+            checkIcon.style.visibility = 'hidden';
+          }
+        });
+      }
+
+      // Theme option click handler
+      themeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const selectedTheme = option.dataset.theme;
+          setTheme(selectedTheme);
+          updateActiveOption(selectedTheme);
+          themeDropdown.classList.remove('show');
+        });
+      });
+
+      // Load theme on page load
+      document.addEventListener('DOMContentLoaded', loadTheme);
+    </script>
+  </body>
+</html>
