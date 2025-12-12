@@ -9,6 +9,8 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 
     <!-- Your custom CSS file -->
     <link id="light-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
@@ -120,6 +122,37 @@
         background: #007bff;
         color: white;
       }
+      
+      .glass-sidebar {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      }
+      .glass-sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .glass-sidebar li {
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+      .glass-sidebar li:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .glass-sidebar a {
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .glass-sidebar a:hover {
+        color: #e3e3e3;
+      }
+
     </style>
   </head>
 
@@ -188,6 +221,7 @@
 
     <!-- Main container (push down from fixed navbar) -->
     <main role="main" class="container-fluid" style="margin-top: 90px;">
+
       <div class="row">
         <div class="col-md-8">
           <!-- Flash messages -->
@@ -203,21 +237,43 @@
 
           {% block content %}{% endblock %}
         </div>
-        
+
         <!-- Sidebar -->
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Properties</h3>
-            <p class="text-muted">These are the things you can do.</p>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-light">Add Posts</li>
-              <li class="list-group-item list-group-item-light">Update Posts</li>
-              <li class="list-group-item list-group-item-light">Delete Posts</li>
-              <li class="list-group-item list-group-item-light">See other's Posts</li>
-            </ul>
-          </div>
+        <div class="sidebar glass-sidebar">
+          <h3>Properties</h3>
+          <ul>
+
+            <!-- Add Post -->
+            <li>
+              <a href="{{ url_for('posts.new_post') }}">
+                <i class="bi bi-plus-circle"></i> Add Posts 
+              </a>
+            </li>
+
+            <!-- Update/Delete Posts -->
+            <li>
+              <a href="{{ url_for('user.user_posts',username=current_user.username) }}">
+                <i class="bi bi-tools"></i> Update / Delete Posts
+              </a>
+            </li>
+
+            <!-- Update Account -->
+            <li>
+              <a href="{{ url_for('user.account') }}">
+                <i class="bi bi-gear"></i> Update Account Settings
+              </a>
+            </li>
+
+            <!-- See Others' Posts -->
+            <li>
+              <a href="{{ url_for('main.home') }}">
+                <i class="bi bi-people"></i> See Others' Posts
+              </a>
+            </li>
+
+          </ul>
         </div>
-      </div>
+
     </main>
 
     <!-- Bootstrap 4 JS -->
