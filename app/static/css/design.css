@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
   background: #b8c8b6;
   color: #333333;
   padding: 15px 20px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #615d5d;
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
@@ -160,7 +160,24 @@ a.article-title:hover {
   border: 3px solid #0fb39a;
 }
 
-.account-heading {
-  font-size: 2.5rem;
-  color: #2c2c2c;
+:root {
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Playfair Display', serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, .post-title {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+}
+.post-title {
+  font-size: 1.8rem;
+}
+
+.post-meta {
+  font-family: var(--font-body);
+  opacity: 0.8;
 }

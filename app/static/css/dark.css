@@ -146,7 +146,24 @@ object-fit: cover;
 border: 3px solid #0fb39a;
 }
 
-.account-heading {
-font-size: 2.5rem;
-color: #e4e4e4;
+:root {
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Playfair Display', serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, .post-title {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+}
+.post-title {
+  font-size: 1.8rem;
+}
+
+.post-meta {
+  font-family: var(--font-body);
+  opacity: 0.8;
 }
