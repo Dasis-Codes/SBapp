@@ -1,8 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="content-section">
-		<h1>Page not found. Error:-404</h1>
-		<p>This page doesn't exist.</p>
-	</div>
+<div class="content-section text-center py-5 position-relative overflow-hidden">
+    <!-- Animated Backdrop Glow -->
+    <div class="error-glow aura-404"></div>
 
+    <div class="position-relative z-index-1">
+        <!-- Animated 404 Graphic -->
+        <div class="error-code-wrapper mb-3">
+            <span class="error-digit float-anim">4</span>
+            <div class="error-icon-orb float-anim-delayed">
+                <i class="fas fa-compass-slash"></i>
+            </div>
+            <span class="error-digit float-anim">4</span>
+        </div>
+
+        <h2 class="font-weight-bold text-dark mb-2">Lost in the Ether?</h2>
+        <p class="text-muted mb-4 max-w-md mx-auto">
+            The page you're looking for doesn't exist or has been relocated into another dimension.
+        </p>
+
+        <div class="d-flex justify-content-center align-items-center">
+            <a href="{{ url_for('main.home') }}" class="btn btn-primary px-4 mr-2">
+                <i class="fas fa-home mr-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock content %}

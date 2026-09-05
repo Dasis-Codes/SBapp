@@ -20,6 +20,8 @@ def create_app(config_class=Config):
 	app = Flask(__name__)
 	app.config.from_object(Config)
 
+	app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 	db.init_app(app)
 	bcrypt.init_app(app)
 	login_manager.init_app(app)

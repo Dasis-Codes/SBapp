@@ -1,360 +1,224 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap 4 (correct version for this project) -->
-    <link rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-
-    <!-- Your custom CSS file -->
-    <link id="light-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
-    <link id="dark-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dark.css') }}" disabled>
-
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% if title %}
-        <title>APP - {{ title }}</title>
+        <title>DASIS WRITES — {{ title }}</title>
     {% else %}
-        <title>APP</title>
+        <title>DASIS WRITES</title>
     {% endif %}
 
-    <!-- Custom CSS for theme switcher -->
-    <style>
-      .theme-dropdown-wrapper {
-        position: relative;
-      }
+    <!-- FontAwesome & Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-      .theme-toggle-btn {
-        background: transparent;
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 20px;
-        color: rgb(240, 240, 240);
-        padding: 6px 15px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s ease;
-      }
-
-      .theme-toggle-btn:hover {
-        background: whitesmoke;
-        border-color: rgba(255,255,255,0.5);
-      }
-
-      .theme-dropdown-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 8px 25px rgba(209, 207, 207, 0.15);
-        padding: 10px 0;
-        min-width: 180px;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        margin-top: 10px;
-      }
-
-      .theme-dropdown-menu.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .theme-option {
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: none;
-        background: none;
-        width: 100%;
-        text-align: left;
-        color: #333;
-      }
-
-      .theme-option:hover {
-        background: #f8f9fa;
-      }
-
-      .theme-option.active {
-        background: #007bff;
-        color: white;
-      }
-
-      .theme-option.active:hover {
-        background: #0069d9;
-      }
-
-      .theme-icon {
-        font-size: 16px;
-        width: 24px;
-        text-align: center;
-      }
-
-      .theme-name {
-        font-weight: 500;
-      }
-
-      .dark-mode .theme-dropdown-menu {
-        background: #343a40;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      }
-
-      .dark-mode .theme-option {
-        color: #e9ecef;
-      }
-
-      .dark-mode .theme-option:hover {
-        background: #495057;
-      }
-
-      .dark-mode .theme-option.active {
-        background: #007bff;
-        color: white;
-      }
-      
-      .glass-sidebar {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-        border-radius: 16px;
-        padding: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      }
-      .glass-sidebar ul {
-        list-style: none;
-        padding: 0;
-      }
-      .glass-sidebar li {
-        padding: 10px 12px;
-        margin-bottom: 8px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: 0.3s ease;
-      }
-      .glass-sidebar li:hover {
-        background: rgba(255, 255, 255, 0.15);
-      }
-      .glass-sidebar a {
-        text-decoration: none;
-        color: #817e7e;
-      }
-
-      .glass-sidebar a:hover {
-        color: #7c7a7a;
-      }
-
-    </style>
-  </head>
-
-  <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">SBAPP</a>
-
-          <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarToggle" aria-controls="navbarToggle"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+    <!-- Active Theme Stylesheet (Bypasses Browser Cache) -->
+    <link id="theme-stylesheet" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}?v=3">
+    <!-- Google Fonts: Plus Jakarta Sans & Orbitron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-custom">
+    <!-- Glassmorphic Preloader -->
+    <div id="preloader">
+        <div class="loader-content text-center">
+            <div class="loader-orb mb-3">
+                <i class="fas fa-layer-group"></i>
             </div>
-
-            <div class="navbar-nav">
-              {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">Add Post</a>
-                <a class="nav-item nav-link" href="{{ url_for('user.account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('user.logout') }}">Log Out</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('user.login') }}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('user.register') }}">Register</a>
-              {% endif %}
+            <h5 class="font-weight-bold text-dark mb-1">DASIS WRITES</h5>
+            <div class="loader-bar mx-auto mt-3">
+                <div class="loader-progress"></div>
             </div>
-            
-            <!-- Premium Theme Switcher -->
-            <div class="theme-dropdown-wrapper mx-3">
-              <button class="theme-toggle-btn" id="theme-toggle-btn">
-                <i class="fas fa-palette"></i>
-                <span>Theme</span>
-                <i class="fas fa-chevron-down ml-1" style="font-size: 12px;"></i>
-              </button>
-              
-              <div class="theme-dropdown-menu" id="theme-dropdown">
-                <button class="theme-option" data-theme="light">
-                  <div class="theme-icon">
-                    <i class="fas fa-sun"></i>
-                  </div>
-                  <div class="theme-name">Light Theme</div>
-                  <div class="theme-check ml-auto">
-                    <i class="fas fa-check"></i>
-                  </div>
-                </button>
-                <button class="theme-option" data-theme="dark">
-                  <div class="theme-icon">
-                    <i class="fas fa-moon"></i>
-                  </div>
-                  <div class="theme-name">Dark Theme</div>
-                  <div class="theme-check ml-auto">
-                    <i class="fas fa-check"></i>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-      </nav>
+    </div>
+    <!-- Floating Navigation Header -->
+    <header class="site-header container pt-3">
+        <nav class="navbar navbar-expand-md floating-navbar px-4">
+            <a class="navbar-brand font-weight-bold" href="{{ url_for('main.home') }}">
+                <i class="fas fa-layer-group text-primary mr-2"></i>DASIS WRITES
+            <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarToggle">
+                <i class="fas fa-bars text-muted"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
+                    <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+                </div>
+                <div class="navbar-nav align-items-center">
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">
+                            <i class="fas fa-pen-nib mr-1"></i>New Post
+                        </a>
+                        <a class="nav-item nav-link" href="{{ url_for('user.account') }}">
+                            <i class="fas fa-user-circle mr-1"></i>Account
+                        </a>
+                        <a class="nav-item nav-link text-danger" href="{{ url_for('user.logout') }}">Logout</a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('user.login') }}">Login</a>
+                        <a class="nav-item nav-link btn btn-primary text-white ml-md-2 px-3 shadow-none" href="{{ url_for('user.register') }}">Get Started</a>
+                    {% endif %}
+
+                    <!-- Theme Switcher Toggle Button -->
+                    <button id="theme-toggle" class="btn btn-sm text-muted ml-md-2 border-0 bg-transparent" type="button" aria-label="Toggle Theme">
+                        <i id="theme-toggle-icon" class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <!-- Main container (push down from fixed navbar) -->
-    <main role="main" class="container-fluid" style="margin-top: 90px;">
+    <!-- Main Content Container -->
+    <!-- Main Content Container (Centered Single-Column) -->
+    <main role="main" class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show border-0 shadow-sm rounded-lg mb-4" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
 
-      <div class="row">
-        <div class="col-md-8">
-          <!-- Flash messages -->
-          {% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-          {% endwith %}
-
-          {% block content %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
         </div>
-
-        <!-- Sidebar -->
-        <div class="sidebar glass-sidebar">
-          <h3>Properties</h3>
-          <ul>
-
-            <!-- Add Post -->
-            <li>
-              <a href="{{ url_for('posts.new_post') }}">
-                <i class="bi bi-plus-circle"></i> Add Posts 
-              </a>
-            </li>
-
-            <!-- Update/Delete Posts -->
-            <li>
-              <a href="{{ url_for('user.user_posts',username=current_user.username) }}">
-                <i class="bi bi-tools"></i> Update / Delete Posts
-              </a>
-            </li>
-
-            <!-- Update Account -->
-            <li>
-              <a href="{{ url_for('user.account') }}">
-                <i class="bi bi-gear"></i> Update Account Settings
-              </a>
-            </li>
-
-            <!-- See Others' Posts -->
-            <li>
-              <a href="{{ url_for('main.home') }}">
-                <i class="bi bi-people"></i> See Others' Posts
-              </a>
-            </li>
-
-          </ul>
-        </div>
-
     </main>
 
-    <!-- Bootstrap 4 JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+    <!-- Grand Gradient Glassmorphic Footer -->
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="scroll-top-btn" onclick="scrollToTop()" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <footer class="container my-5">
+        <div class="footer-gradient-box p-4 p-md-5">
+            <div class="row gy-4">
+                <!-- Brand & Mission Column -->
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="brand-icon-wrapper mr-3">
+                            <i class="fas fa-layer-group text-white"></i>
+                        </div>
+                        <span class="font-weight-bold h5 mb-0 text-dark">DASIS WRITES</span>
+                    </div>
+                    <p class="text-muted small pr-lg-4 mb-4">
+                        The digital sandbox of DASIS. Built fast with Flask and modern, independent styling
+                    </p>
+                    <div class="d-flex align-items-center social-links">
+                        <a href="#" class="social-btn mr-2" aria-label="Github"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-btn mr-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-btn" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-6 col-lg-3 mb-3 mb-lg-0">
+                    <h6 class="font-weight-bold text-dark small text-uppercase tracking-wider mb-3">Explore</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="{{ url_for('main.home') }}" class="footer-link">Home Feed</a></li>
+                        <li class="mb-2"><a href="{{ url_for('main.about') }}" class="footer-link">About Platform</a></li>
+                        {% if current_user.is_authenticated %}
+                            <li class="mb-2"><a href="{{ url_for('posts.new_post') }}" class="footer-link">Write a Post</a></li>
+                            <li class="mb-2"><a href="{{ url_for('user.account') }}" class="footer-link">Account Settings</a></li>
+                        {% else %}
+                            <li class="mb-2"><a href="{{ url_for('user.login') }}" class="footer-link">Sign In</a></li>
+                            <li class="mb-2"><a href="{{ url_for('user.register') }}" class="footer-link">Create Account</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <!-- Legal & System -->
+                <div class="col-6 col-lg-4">
+                    <h6 class="font-weight-bold text-dark small text-uppercase tracking-wider mb-3">Resources & Legal</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Documentation</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Divider Line & Bottom Bar -->
+            <hr class="footer-divider my-4">
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-muted small">
+                <span>&copy; 2026 DASIS WRITES.</span>
+                <span class="mt-2 mt-md-0">
+        Built By:  <a href="https://dasiscodes.com" target="_blank" rel="noopener noreferrer" class="dasis-brand-link">DASIS CODES</a>
+    </span>
+    </span>
+            
+    </span>
+            
+    </span>
+            </div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme Switching Script -->
     <script>
-      const themeToggleBtn = document.getElementById('theme-toggle-btn');
-      const themeDropdown = document.getElementById('theme-dropdown');
-      const themeOptions = document.querySelectorAll('.theme-option');
-      const lightTheme = document.getElementById('light-theme');
-      const darkTheme = document.getElementById('dark-theme');
-      const body = document.body;
+        const themeStylesheet = document.getElementById('theme-stylesheet');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
 
-      // Toggle dropdown
-      themeToggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        themeDropdown.classList.toggle('show');
-      });
+        const lightThemeUrl = "{{ url_for('static', filename='css/design.css') }}?v=3";
+        const darkThemeUrl = "{{ url_for('static', filename='css/dark.css') }}?v=3";
 
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!themeToggleBtn.contains(e.target) && !themeDropdown.contains(e.target)) {
-          themeDropdown.classList.remove('show');
-        }
-      });
-
-      // Load saved theme on page load
-      function loadTheme() {
+        // Read saved setting or default to light
         const savedTheme = localStorage.getItem('theme') || 'light';
-        setTheme(savedTheme);
-        updateActiveOption(savedTheme);
-      }
-
-      // Set theme function
-      function setTheme(theme) {
-        if (theme === 'dark') {
-          lightTheme.disabled = true;
-          darkTheme.disabled = false;
-          body.classList.add('dark-mode');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          lightTheme.disabled = false;
-          darkTheme.disabled = true;
-          body.classList.remove('dark-mode');
-          localStorage.setItem('theme', 'light');
+        if (savedTheme === 'dark') {
+            themeStylesheet.href = darkThemeUrl;
+            themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
         }
-      }
 
-      // Update active option in dropdown
-      function updateActiveOption(theme) {
-        themeOptions.forEach(option => {
-          const checkIcon = option.querySelector('.theme-check i');
-          if (option.dataset.theme === theme) {
-            option.classList.add('active');
-            checkIcon.style.visibility = 'visible';
-          } else {
-            option.classList.remove('active');
-            checkIcon.style.visibility = 'hidden';
-          }
+        // Toggle click handler
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = themeStylesheet.href.includes('dark.css');
+            if (isDark) {
+                themeStylesheet.href = lightThemeUrl;
+                themeToggleIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeStylesheet.href = darkThemeUrl;
+                themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
         });
-      }
+        const scrollBtn = document.getElementById("scrollTopBtn");
 
-      // Theme option click handler
-      themeOptions.forEach(option => {
-        option.addEventListener('click', () => {
-          const selectedTheme = option.dataset.theme;
-          setTheme(selectedTheme);
-          updateActiveOption(selectedTheme);
-          themeDropdown.classList.remove('show');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.classList.add("show");
+            } else {
+                scrollBtn.classList.remove("show");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            
+            // Brief minimum display time (e.g., 600ms) for visual polish
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500); // Matches CSS transition duration
+            }, 600);
         });
-      });
-
-      // Load theme on page load
-      document.addEventListener('DOMContentLoaded', loadTheme);
     </script>
-  </body>
+    {% block scripts %}{% endblock scripts %}
+</body>
 </html>
