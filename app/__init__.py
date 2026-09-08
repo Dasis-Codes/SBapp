@@ -21,6 +21,7 @@ def create_app(config_class=Config):
 	app.config.from_object(Config)
 
 	app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+	app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 	db.init_app(app)
 	bcrypt.init_app(app)

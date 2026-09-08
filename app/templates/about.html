@@ -1,9 +1,76 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="content-section">
-        <h1>App Info</h1>
-        <p>It is a flask website. It is a blog webiste. You can leave your messages for other people.</p>
-        <p>I hope you will like this app.</p>
+<div class="content-section">
+    <!-- Header Section -->
+    <div class="text-center mb-4">
+        <h2 class="font-weight-bold text-gradient mb-2">About DASIS WRITES</h2>
+        <p class="text-muted">Where code, system architecture, and modern tech stories intersect.</p>
     </div>
+
+    <hr class="footer-divider mb-4">
+
+    <!-- Developer Story -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <p class="article-content mb-3">
+                Welcome to <strong>DASIS WRITES</strong>—the official engineering and digital publication space by
+                <strong>DasisCodes</strong>.
+            </p>
+            <p class="article-content mb-3">
+                This platform was built to bridge the gap between technical complexity and practical implementation.
+                Whether breaking down modern full-stack web architectures, sharing insights on software design patterns,
+                or exploring modern UI/UX design trends, every article is crafted for developers, builders, and
+                technology enthusiasts.
+            </p>
+            <p class="article-content mb-3">
+                DASIS WRITES is both a living portfolio project and an active knowledge hub—engineered with high
+                performance, dark-mode elegance, and zero unnecessary bloat.
+            </p>
+        </div>
+    </div>
+
+    <!-- Feature Highlight Cards -->
+    <div class="row my-4">
+        <div class="col-md-4 mb-3">
+            <div class="sidebar-box p-3 h-100">
+                <h6 class="font-weight-bold text-gradient mb-2">
+                    <i class="fas fa-code mr-2"></i>Tech Stack
+                </h6>
+                <p class="small text-muted mb-0">
+                    Powered by Flask, Python, SQL database models, and modular Blueprints for clean architecture.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="sidebar-box p-3 h-100">
+                <h6 class="font-weight-bold text-gradient mb-2">
+                    <i class="fas fa-paint-brush mr-2"></i>Glassmorphic UI
+                </h6>
+                <p class="small text-muted mb-0">
+                    Custom dark theme featuring fluid glassmorphic cards, Orbitron branding, and smooth transitions.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="sidebar-box p-3 h-100">
+                <h6 class="font-weight-bold text-gradient mb-2">
+                    <i class="fas fa-shield-alt mr-2"></i>Rich Content
+                </h6>
+                <p class="small text-muted mb-0">
+                    Integrated rich-text editing with server-side HTML sanitization (`bleach`) for safe, full-featured
+                    publishing.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action & Call-To-Action -->
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mt-4 pt-2">
+        <div class="d-flex align-items-center gap-3">
+            <a href="{{ url_for('main.home') }}" class="btn btn-primary hero-btn">Explore Articles</a>
+        </div>
+        <span class="small text-muted">Crafted with care by DasisCodes</span>
+    </div>
+</div>
 
 {% endblock content %}

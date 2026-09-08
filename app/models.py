@@ -15,12 +15,14 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(40), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    # ADD THIS LINE:
+    is_admin = db.Column(db.Boolean, default=False)
+    
     posts = db.relationship('Post', backref='author', lazy=True)
 
     def get_reset_token(self):
         s = Serializer(current_app.config['SECRET_KEY'])
         return s.dumps({'user_id': self.id})
-
 
     @staticmethod
     def verify_reset_token(token, expires_sec=1800):
@@ -30,8 +32,6 @@ class User(db.Model, UserMixin):
         except Exception:
             return None
         return User.query.get(user_id)
-
-
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"

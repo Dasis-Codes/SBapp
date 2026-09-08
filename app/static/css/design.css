@@ -49,6 +49,24 @@ body {
   line-height: 1.6;
 }
 
+/*BLOG NAME*/
+.brand-title {
+  font-family: 'Orbitron', -apple-system, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #98949d 0%, var(--primary, #6366f1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.brand-title:hover {
+  text-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+  transform: translateY(0px);
+}
+
 /* Header & Floating Navbar */
 .site-header {
   position: sticky;
@@ -88,6 +106,54 @@ body {
   background: var(--primary-subtle);
 }
 
+/* MOBILE RESPONSIVE NAVBAR */
+/* Mobile Responsive Navbar Improvements */
+@media (max-width: 767.98px) {
+    /* Adjust pill container on mobile */
+    .floating-navbar {
+        border-radius: var(--radius-lg, 16px);
+        padding: 0.75rem 1rem;
+    }
+
+    /* Style the collapsible menu wrapper */
+    .floating-navbar .navbar-collapse {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* Stack nav links neatly with touch-friendly spacing */
+    .floating-navbar .nav-link {
+        border-radius: 8px;
+        padding: 0.6rem 0.75rem !important;
+        margin-bottom: 0.25rem;
+        display: block;
+    }
+
+    /* Align right-side actions (New Post, Account, Theme Toggle) on mobile */
+    .floating-navbar .navbar-nav.align-items-center {
+        align-items: flex-start !important;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    /* Ensure primary action button spans cleanly */
+    .floating-navbar .btn.btn-primary {
+        margin-left: 0 !important;
+        margin-top: 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Fix theme switcher button alignment in mobile menu */
+    #theme-toggle {
+        margin-left: 0 !important;
+        margin-top: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        width: 100%;
+        text-align: left;
+    }
+}
 /* Card Sections */
 .content-section {
   background: var(--bg-card);
@@ -194,27 +260,6 @@ article.content-section:hover {
   border: 1px solid var(--border-color);
   font-weight: 600;
 }
-
-/* Glassmorphic Footer */
-/*.footer-box {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
-}
-
-.footer-links a {
-  text-decoration: none;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.footer-links a:hover {
-  color: var(--primary) !important;
-}*/
 
 
 /* ==========================================================================
@@ -530,4 +575,306 @@ article.content-section:hover {
   color: var(--primary-hover) !important;
   text-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
   text-decoration: none;
+}
+
+/* ==========================================================================
+   Featured Hero Card
+   ========================================================================== */
+.featured-hero-card {
+  position: relative;
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg, 16px);
+  padding: 2.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featured-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+}
+
+.featured-hero-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.15);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+
+.hero-title a {
+  color: var(--text-main, #ffffff);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hero-title a:hover {
+  color: #6366f1;
+}
+
+.hero-meta {
+  font-size: 0.875rem;
+  color: var(--text-muted, #94a3b8);
+}
+
+.hero-excerpt {
+  color: var(--text-muted, #94a3b8);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.hero-btn {
+  border-radius: 50px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge-soft-primary {
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  padding: 0.4em 0.8em;
+}
+
+/*ADDITION*/
+/* Custom Glassmorphic Pagination */
+.glass-pagination .page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 10px !important;
+  background: var(--bg-glass, rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  color: var(--text-main, #ffffff) !important;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin: 0 4px;
+}
+
+.glass-pagination .page-link:hover:not(.active):not(.disabled) {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+  transform: translateY(-2px);
+}
+
+.glass-pagination .page-link.active {
+  background: #6366f1 !important;
+  border-color: #6366f1 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.glass-pagination .page-link.disabled {
+  opacity: 0.5;
+  background: transparent;
+  border: none;
+}
+
+/*USERNAME STYLING*/
+.article-metadata {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+/* FIX: Ensure author username links use white text instead of default blue */
+.article-metadata a {
+  color: var(--text-main, #f1f5f9) !important;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.article-metadata a:hover {
+  color: var(--primary-hover, #818cf8) !important;
+  text-decoration: none;
+}
+
+/*LOADING PAGE*/
+/* ==========================================================================
+   Smooth Page Transition Fade-In
+   ========================================================================== */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main.container {
+  animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   NProgress Top Bar Custom Styling
+   ========================================================================== */
+#nprogress .bar {
+  background: linear-gradient(90deg, #6366f1, #a855f7) !important;
+  height: 3px !important;
+  z-index: 10000 !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #6366f1, 0 0 5px #a855f7 !important;
+}
+
+#nprogress .spinner {
+  display: none !important; /* Keep it clean without extra spinners */
+}
+
+/* ==========================================================================
+   Summernote Modal & Image Pop-up Z-Index Fix
+   ========================================================================== */
+.note-modal-backdrop {
+  z-index: 1040 !important;
+}
+
+.note-modal {
+  z-index: 1050 !important;
+}
+
+/* Ensure inputs, buttons, and popover dialogs inside the modal are clickable */
+.note-modal .modal-dialog {
+  z-index: 1060 !important;
+  position: relative !important;
+}
+
+.note-modal .modal-content {
+  background: var(--bg-card, #151c28) !important;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1)) !important;
+  color: var(--text-main, #f1f5f9) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
+}
+
+.note-modal .form-control {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Ensure Summernote fullscreen overlay stays above footer and navbar */
+.note-editor.note-frame.fullscreen {
+    z-index: 10500 !important;
+    background-color: var(--bg-color, #ffffff) !important; /* Prevents background elements from showing through */
+}
+
+/* Hide the site footer completely when Summernote is in fullscreen mode */
+body:has(.note-editor.note-frame.fullscreen) footer,
+.note-editor.note-frame.fullscreen ~ footer {
+    z-index: 1 !important;
+    display: none !important;
+}
+
+/* Elevate Summernote Fullscreen above fixed Navbars and UI elements */
+.note-editor.note-frame.fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 10500 !important; /* Forces it above navbar */
+    background-color: var(--bg-color, #ffffff) !important;
+}
+
+/* Hide fixed/sticky Navbars while in Summernote Fullscreen */
+body:has(.note-editor.note-frame.fullscreen) navbar,
+body:has(.note-editor.note-frame.fullscreen) .navbar,
+body:has(.note-editor.note-frame.fullscreen) header {
+    display: none !important;
+}
+
+/* Ensure Bootstrap modal always stays in front of its dark backdrop */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+.modal {
+    z-index: 1050 !important;
+}
+
+/* Responsive rich content styling inside posts */
+.article-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.article-content h1, 
+.article-content h2, 
+.article-content h3, 
+.article-content h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+/* Summernote Modal Input Fixes */
+.note-modal .modal-content {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+.note-modal .form-control,
+.note-modal input[type="text"],
+.note-modal input[type="url"] {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    border: 1px solid #ced4da !important;
+}
+
+.note-modal .form-control:focus,
+.note-modal input[type="text"]:focus,
+.note-modal input[type="url"]:focus {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.note-modal .form-group label {
+    color: #333333 !important;
 }

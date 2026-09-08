@@ -1,44 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% if title %}
-        <title>DASIS WRITES — {{ title }}</title>
+    <title>DASIS WRITES — {{ title }}</title>
     {% else %}
-        <title>DASIS WRITES</title>
+    <title>DASIS WRITES</title>
     {% endif %}
 
     <!-- FontAwesome & Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-    <!-- Active Theme Stylesheet (Bypasses Browser Cache) -->
-    <link id="theme-stylesheet" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}?v=3">
-    <!-- Google Fonts: Plus Jakarta Sans & Orbitron -->
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+
+    <!-- Active Theme Stylesheet -->
+    <link id="theme-stylesheet" rel="stylesheet" type="text/css"
+        href="{{ url_for('static', filename='css/design.css') }}?v=3">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
 </head>
+
 <body class="bg-custom">
+
     <!-- Glassmorphic Preloader -->
     <div id="preloader">
         <div class="loader-content text-center">
             <div class="loader-orb mb-3">
                 <i class="fas fa-layer-group"></i>
             </div>
-            <h5 class="font-weight-bold text-dark mb-1">DASIS WRITES</h5>
+            <h5 class="brand-title mb-0">DASIS WRITES</h5>
             <div class="loader-bar mx-auto mt-3">
                 <div class="loader-progress"></div>
             </div>
         </div>
     </div>
+
     <!-- Floating Navigation Header -->
     <header class="site-header container pt-3">
         <nav class="navbar navbar-expand-md floating-navbar px-4">
-            <a class="navbar-brand font-weight-bold" href="{{ url_for('main.home') }}">
-                <i class="fas fa-layer-group text-primary mr-2"></i>DASIS WRITES
-            <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarToggle">
+            <h4 class="brand-title mb-0">DASIS WRITES</h4>
+            <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars text-muted"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
@@ -48,20 +60,22 @@
                 </div>
                 <div class="navbar-nav align-items-center">
                     {% if current_user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">
-                            <i class="fas fa-pen-nib mr-1"></i>New Post
-                        </a>
-                        <a class="nav-item nav-link" href="{{ url_for('user.account') }}">
-                            <i class="fas fa-user-circle mr-1"></i>Account
-                        </a>
-                        <a class="nav-item nav-link text-danger" href="{{ url_for('user.logout') }}">Logout</a>
+                    <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">
+                        <i class="fas fa-pen-nib mr-1"></i>New Post
+                    </a>
+                    <a class="nav-item nav-link" href="{{ url_for('user.account') }}">
+                        <i class="fas fa-user-circle mr-1"></i>Account
+                    </a>
+                    <a class="nav-item nav-link text-danger" href="{{ url_for('user.logout') }}">Logout</a>
                     {% else %}
-                        <a class="nav-item nav-link" href="{{ url_for('user.login') }}">Login</a>
-                        <a class="nav-item nav-link btn btn-primary text-white ml-md-2 px-3 shadow-none" href="{{ url_for('user.register') }}">Get Started</a>
+                    <a class="nav-item nav-link" href="{{ url_for('user.login') }}">Login</a>
+                    <a class="nav-item nav-link btn btn-primary text-white ml-md-2 px-3 shadow-none"
+                        href="{{ url_for('user.register') }}">Get Started</a>
                     {% endif %}
 
                     <!-- Theme Switcher Toggle Button -->
-                    <button id="theme-toggle" class="btn btn-sm text-muted ml-md-2 border-0 bg-transparent" type="button" aria-label="Toggle Theme">
+                    <button id="theme-toggle" class="btn btn-sm text-muted ml-md-2 border-0 bg-transparent"
+                        type="button" aria-label="Toggle Theme">
                         <i id="theme-toggle-icon" class="fas fa-moon"></i>
                     </button>
                 </div>
@@ -70,21 +84,21 @@
     </header>
 
     <!-- Main Content Container -->
-    <!-- Main Content Container (Centered Single-Column) -->
     <main role="main" class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-10 col-xl-8">
                 {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ category }} alert-dismissible fade show border-0 shadow-sm rounded-lg mb-4" role="alert">
-                                {{ message }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show border-0 shadow-sm rounded-lg mb-4"
+                    role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-label="True">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
                 {% endwith %}
 
                 {% block content %}{% endblock %}
@@ -92,12 +106,12 @@
         </div>
     </main>
 
-
-    <!-- Grand Gradient Glassmorphic Footer -->
     <!-- Scroll to Top Button -->
     <button id="scrollTopBtn" class="scroll-top-btn" onclick="scrollToTop()" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Footer -->
     <footer class="container my-5">
         <div class="footer-gradient-box p-4 p-md-5">
             <div class="row gy-4">
@@ -107,7 +121,7 @@
                         <div class="brand-icon-wrapper mr-3">
                             <i class="fas fa-layer-group text-white"></i>
                         </div>
-                        <span class="font-weight-bold h5 mb-0 text-dark">DASIS WRITES</span>
+                        <h5 class="brand-title mb-0">DASIS WRITES</h5>
                     </div>
                     <p class="text-muted small pr-lg-4 mb-4">
                         The digital sandbox of DASIS. Built fast with Flask and modern, independent styling
@@ -126,11 +140,11 @@
                         <li class="mb-2"><a href="{{ url_for('main.home') }}" class="footer-link">Home Feed</a></li>
                         <li class="mb-2"><a href="{{ url_for('main.about') }}" class="footer-link">About Platform</a></li>
                         {% if current_user.is_authenticated %}
-                            <li class="mb-2"><a href="{{ url_for('posts.new_post') }}" class="footer-link">Write a Post</a></li>
-                            <li class="mb-2"><a href="{{ url_for('user.account') }}" class="footer-link">Account Settings</a></li>
+                        <li class="mb-2"><a href="{{ url_for('posts.new_post') }}" class="footer-link">Write a Post</a></li>
+                        <li class="mb-2"><a href="{{ url_for('user.account') }}" class="footer-link">Account Settings</a></li>
                         {% else %}
-                            <li class="mb-2"><a href="{{ url_for('user.login') }}" class="footer-link">Sign In</a></li>
-                            <li class="mb-2"><a href="{{ url_for('user.register') }}" class="footer-link">Create Account</a></li>
+                        <li class="mb-2"><a href="{{ url_for('user.login') }}" class="footer-link">Sign In</a></li>
+                        <li class="mb-2"><a href="{{ url_for('user.register') }}" class="footer-link">Create Account</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -146,27 +160,32 @@
                 </div>
             </div>
 
-            <!-- Divider Line & Bottom Bar -->
             <hr class="footer-divider my-4">
 
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-muted small">
                 <span>&copy; 2026 DASIS WRITES.</span>
                 <span class="mt-2 mt-md-0">
-        Built By:  <a href="https://dasiscodes.com" target="_blank" rel="noopener noreferrer" class="dasis-brand-link">DASIS CODES</a>
-    </span>
-    </span>
-            
-    </span>
-            
-    </span>
+                    Built By: <a href="https://dasiscodes.com" target="_blank" rel="noopener noreferrer"
+                        class="dasis-brand-link">DASIS CODES</a>
+                </span>
             </div>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Place Modals Outside Main Container -->
+    {% block modals %}{% endblock modals %}
+
+    <!-- Core JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Theme Switching Script -->
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+
+    <!-- Theme & Interactivity Script -->
     <script>
+        // Theme Switcher
         const themeStylesheet = document.getElementById('theme-stylesheet');
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeToggleIcon = document.getElementById('theme-toggle-icon');
@@ -174,51 +193,121 @@
         const lightThemeUrl = "{{ url_for('static', filename='css/design.css') }}?v=3";
         const darkThemeUrl = "{{ url_for('static', filename='css/dark.css') }}?v=3";
 
-        // Read saved setting or default to light
         const savedTheme = localStorage.getItem('theme') || 'light';
         if (savedTheme === 'dark') {
             themeStylesheet.href = darkThemeUrl;
             themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
         }
 
-        // Toggle click handler
-        themeToggleBtn.addEventListener('click', () => {
-            const isDark = themeStylesheet.href.includes('dark.css');
-            if (isDark) {
-                themeStylesheet.href = lightThemeUrl;
-                themeToggleIcon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeStylesheet.href = darkThemeUrl;
-                themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-        const scrollBtn = document.getElementById("scrollTopBtn");
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = themeStylesheet.href.includes('dark.css');
+                if (isDark) {
+                    themeStylesheet.href = lightThemeUrl;
+                    themeToggleIcon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    themeStylesheet.href = darkThemeUrl;
+                    themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
 
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                scrollBtn.classList.add("show");
-            } else {
-                scrollBtn.classList.remove("show");
+        // Scroll to Top
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.onscroll = function () {
+            if (scrollBtn) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollBtn.classList.add("show");
+                } else {
+                    scrollBtn.classList.remove("show");
+                }
             }
         };
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        window.addEventListener('load', function() {
+
+        // Preloader
+        document.addEventListener('DOMContentLoaded', function () {
             const preloader = document.getElementById('preloader');
-            
-            // Brief minimum display time (e.g., 600ms) for visual polish
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-                setTimeout(() => {
+            if (preloader) {
+                if (sessionStorage.getItem('preloaderShown')) {
                     preloader.style.display = 'none';
-                }, 500); // Matches CSS transition duration
-            }, 600);
+                } else {
+                    window.addEventListener('load', function () {
+                        setTimeout(() => {
+                            preloader.classList.add('fade-out');
+                            setTimeout(() => {
+                                preloader.style.display = 'none';
+                            }, 500);
+                            sessionStorage.setItem('preloaderShown', 'true');
+                        }, 600);
+                    });
+                }
+            }
+        });
+
+        // Summernote initialization
+        $(document).ready(function () {
+            if ($('#content').length) {
+                $('#content').summernote({
+                    placeholder: 'Write your story here...',
+                    tabsize: 2,
+                    height: 300,
+                    dialogsInBody: true,
+                    maximumImageFileSize: 5 * 1024 * 1024,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', ['underline', 'clear']]],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
+                    callbacks: {
+                        onImageUploadError: function (msg) {
+                            alert('File size is too large! Maximum allowed size is 5MB.');
+                        }
+                    }
+                });
+            }
+        });
+
+        // Page Exit Transition Listener
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof NProgress !== 'undefined') {
+                NProgress.configure({ showSpinner: false, speed: 400 });
+            }
+
+            const selector = 'a[href]:not([target="_blank"]):not([href^="#"]):not([href^="javascript"]):not(.note-editor a):not(.note-modal a):not(.modal a):not([data-toggle]):not([data-dismiss])';
+            const links = document.querySelectorAll(selector);
+
+            links.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    if (this.hasAttribute('data-toggle') || this.hasAttribute('data-dismiss')) {
+                        return;
+                    }
+
+                    if (e.button === 0 && !e.ctrlKey && !e.metaKey) {
+                        if (typeof NProgress !== 'undefined') {
+                            NProgress.start();
+                        }
+
+                        const mainContainer = document.querySelector('main.container');
+                        if (mainContainer) {
+                            mainContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                            mainContainer.style.opacity = '0';
+                            mainContainer.style.transform = 'translateY(-4px)';
+                        }
+                    }
+                });
+            });
         });
     </script>
     {% block scripts %}{% endblock scripts %}
 </body>
+
 </html>
