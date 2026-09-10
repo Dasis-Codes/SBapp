@@ -6,6 +6,7 @@ from app.models import Post
 from app.posts.forms import PostForm
 import bleach
 from bleach.css_sanitizer import CSSSanitizer
+from app.user.utils import save_picture, process_embedded_images
 
 posts = Blueprint('posts', __name__)
 
@@ -46,7 +47,7 @@ ALLOWED_PROTOCOLS = ['http', 'https', 'mailto', 'data']
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        # Sanitize HTML with Base64 image and CSS style support
+        # 1. Sanitize HTML
         clean_content = bleach.clean(
             form.content.data, 
             tags=ALLOWED_TAGS, 
@@ -55,7 +56,11 @@ def new_post():
             css_sanitizer=css_sanitizer
         )
 
-        post = Post(title=form.title.data, content=clean_content, author=current_user)
+        # 2. Extract Base64 images, compress them, and replace with static file paths
+        final_content = process_embedded_images(clean_content)
+
+        # 3. Save post to database
+        post = Post(title=form.title.data, content=final_content, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash("Your post has been added!", "success")
@@ -73,7 +78,6 @@ def update_post(post_id):
 
     form = PostForm()
     if form.validate_on_submit():
-        # Sanitize HTML with Base64 image and CSS style support
         clean_content = bleach.clean(
             form.content.data, 
             tags=ALLOWED_TAGS, 
@@ -81,12 +85,13 @@ def update_post(post_id):
             protocols=ALLOWED_PROTOCOLS,
             css_sanitizer=css_sanitizer
         )
+        # ADD THIS LINE TO UPDATE ROUTE AS WELL:
+        final_content = process_embedded_images(clean_content)
+
         post_obj.title = form.title.data
-        post_obj.content = clean_content
+        post_obj.content = final_content
         db.session.commit()
         flash("Your post has been updated!", "success")
-        
-        # FIXED: Pass post_id correctly to the 'posts.post' view function
         return redirect(url_for("posts.post", post_id=post_obj.id))
         
     elif request.method == "GET":
@@ -94,7 +99,6 @@ def update_post(post_id):
         form.content.data = post_obj.content
 
     return render_template("create_post.html", title="Update Post", form=form, legend="Update Post")
-
 
 @posts.route("/post/<int:post_id>")
 def post(post_id):

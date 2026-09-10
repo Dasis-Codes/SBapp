@@ -878,3 +878,19 @@ body:has(.note-editor.note-frame.fullscreen) header {
 .note-modal .form-group label {
     color: #333333 !important;
 }
+
+/*GREY PAGE FIX */
+/* Ensure Summernote modals sit above all backdrops */
+.note-modal-backdrop {
+    display: none !important; /* Disables Summernote's internal duplicate backdrop */
+}
+
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+.note-modal, 
+.modal.note-modal {
+    z-index: 1055 !important;
+    background: rgba(0, 0, 0, 0.5); /* Replaces Bootstrap's broken backdrop cleanly */
+}

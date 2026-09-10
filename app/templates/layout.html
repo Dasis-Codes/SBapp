@@ -250,7 +250,37 @@
             }
         });
 
-        // Summernote initialization
+        // Client-side image compression helper
+        function resizeAndInsertImage(file, editor) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                let img = new Image();
+                img.src = e.target.result;
+                img.onload = function() {
+                    let canvas = document.createElement('canvas');
+                    let max_width = 1200;
+                    let scale = max_width / img.width;
+                    
+                    if (scale < 1) {
+                        canvas.width = max_width;
+                        canvas.height = img.height * scale;
+                    } else {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                    }
+
+                    let ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // Compress image down to JPEG (80% quality)
+                    let compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    $(editor).summernote('insertImage', compressedDataUrl);
+                };
+            };
+        }
+
+        // Single Consolidated Summernote Initialization
         $(document).ready(function () {
             if ($('#content').length) {
                 $('#content').summernote({
@@ -258,18 +288,24 @@
                     tabsize: 2,
                     height: 300,
                     dialogsInBody: true,
-                    maximumImageFileSize: 5 * 1024 * 1024,
+                    dialogsFade: true,
+                    maximumImageFileSize: 64 * 1024 * 1024, // 64MB limit
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', ['underline', 'clear']]],
+                        ['font', ['bold', 'underline', 'clear']],
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['insert', ['link', 'picture', 'video']],
                         ['view', ['fullscreen', 'codeview']]
                     ],
                     callbacks: {
+                        onImageUpload: function(files) {
+                            for (let i = 0; i < files.length; i++) {
+                                resizeAndInsertImage(files[i], this);
+                            }
+                        },
                         onImageUploadError: function (msg) {
-                            alert('File size is too large! Maximum allowed size is 5MB.');
+                            alert('File size is too large! Maximum allowed size is 32MB.');
                         }
                     }
                 });
